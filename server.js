@@ -47,7 +47,11 @@ function filterByQuery(query, animalsArray) {
   }
 
 
-
+// function that takes in both id & array of animals, returning a single object
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id) [0];
+    return result;
+}
 
 // add the .get() callback route for app.listen()
 app.get('/api/animals', (req, res) => {
@@ -60,6 +64,16 @@ app.get('/api/animals', (req, res) => {
     res.json(results);
   });
 
+
+// add a 2nd .get() to filter more closely
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result);
+    } else {
+        res.sendStatus(404);
+    }
+});
 
 // chain listen() method onto our server to make the server listen; 3001 used as it is commonly used & does not require special permissions to use
 app.listen(PORT, () => {
