@@ -4,10 +4,11 @@ const express = require('express');
 // require the data that is requested by the front-end code
 const { animals } = require('./data/animals');
 
+// tell heroku to use port process environment
+const PORT = process.env.PORT || 3001;
+
 // instantiate the server (represent the abstraction of the server); express() assigned so we can later chain methods to Express.js server
 const app = express();
-
-
 
 
 
@@ -61,6 +62,6 @@ app.get('/api/animals', (req, res) => {
 
 
 // chain listen() method onto our server to make the server listen; 3001 used as it is commonly used & does not require special permissions to use
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
 });
