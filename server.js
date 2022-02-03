@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
-// require connection to express.js
 const express = require('express');
 
 // require the data that is requested by the front-end code
@@ -13,14 +11,14 @@ const PORT = process.env.PORT || 3001;
 // instantiate the server (represent the abstraction of the server); express() assigned so we can later chain methods to Express.js server
 const app = express();
 
+// establish Express.js middleware to instruct server to make certain files readily available
+app.use(express.static('public'));
+
 // tell Express.js app to intercept POST request before it gets to callback fxn
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
-
-// establish Express.js middleware to instruct server to make certain files readily available
-app.use(express.static('public'));
 
 // add before the .get() callback, create a filter functionality
 function filterByQuery(query, animalsArray) {
@@ -109,7 +107,7 @@ app.get('/api/animals', (req, res) => {
 
 
 // add a 2nd .get() to filter more closely
-app.get('/api/animals/:id', (req, res) => {1
+app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
     if (result) {
         res.json(result);
