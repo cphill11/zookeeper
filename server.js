@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
+// establish Express.js middleware to instruct server to make certain files readily available
+app.use(express.static('public'));
+
 // add before the .get() callback, create a filter functionality
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -132,7 +135,24 @@ app.post('/api/animals', (req, res) => {
   }
 });
 
-// chain listen() method onto our server to make the server listen; 3001 used as it is commonly used & does not require special permissions to use
+// route to index.html; ('/') connects to root route of server
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+// wildcard ('*') always goes last in line of app.get functionality, otherwise it will take precedence over all the others
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+// chain listen() method onto our server to make the server listen; 3001 used as it is commonly used & does not require special permissions to use; this should ALWAYS BE LAST
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
