@@ -1,17 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+//const fs = require('fs');
+// const path = require('path');
 const express = require('express');
-
-// require the data that is requested by the front-end code
-const { animals } = require('./data/animals');
-const apiRoutes = require('./routes/apiRoutes');
-const htmlRoutes = require('./routes/htmlRoutes');
-
 // tell heroku to use port process environment
 const PORT = process.env.PORT || 3001;
-
 // instantiate the server (represent the abstraction of the server); express() assigned so we can later chain methods to Express.js server
 const app = express();
+
+// require the data that is requested by the front-end code
+//const { animals } = require('./data/animals');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
 // tell Express.js app to intercept POST request before it gets to callback fxn
 // parse incoming string or array data
